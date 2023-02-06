@@ -25,6 +25,7 @@ default = [
     "egui_open_url",
 ]
 documentation = ["bevy_reflect/documentation"]
+documentation-for-components = ["documentation"]
 bevy_render = ["dep:bevy_render", "dep:bevy_core_pipeline", "bevy_egui/render"]
 egui_clipboard = ["bevy_egui/manage_clipboard"]
 egui_open_url = ["bevy_egui/open_url"]
