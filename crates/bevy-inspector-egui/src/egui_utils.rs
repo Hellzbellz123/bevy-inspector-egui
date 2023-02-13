@@ -97,16 +97,26 @@ pub fn down_button(ui: &mut egui::Ui) -> egui::Response {
     IconButton::new(ui).down_button()
 }
 
-pub fn easymark(ui: &mut egui::Ui, text: &str) {
-    let mut end_idx = text.len();
-    for (idx, ..) in text.rmatch_indices("\n") {
-        let line = text[idx + 1..].trim_start();
-        if line.starts_with("[") || line.is_empty() {
-            end_idx = idx;
+pub fn show_docs(response: egui::Response, docs: Option<&str>) {
+    if let Some(docs) = docs {
+        let mut end_idx = docs.len();
+        for (idx, ..) in docs.rmatch_indices("\n") {
+            let line = docs[idx + 1..].trim_start();
+            if line.starts_with("[") || line.is_empty() {
+                end_idx = idx;
+            } else {
+                break;
+            }
         }
-    }
 
-    easymark::viewer::easy_mark(ui, &text[..end_idx]);
+        response.on_hover_ui(|ui| {
+            easymark(ui, &docs[..end_idx]);
+        });
+    }
+}
+
+pub fn easymark(ui: &mut egui::Ui, text: &str) {
+    easymark::viewer::easy_mark(ui, text);
 }
 
 mod easymark {

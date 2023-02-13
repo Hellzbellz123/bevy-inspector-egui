@@ -59,7 +59,7 @@
 //! }
 //! ```
 
-use crate::egui_utils;
+use crate::egui_utils::show_docs;
 use crate::inspector_egui_impls::{iter_all_eq, InspectorEguiImpl};
 use crate::inspector_options::{InspectorOptions, ReflectInspectorOptions, Target};
 use crate::restricted_world_view::RestrictedWorldView;
@@ -1940,12 +1940,4 @@ fn inspector_options_enum_variant_field<'a>(
 
 fn or(a: bool, b: bool) -> bool {
     a || b
-}
-
-fn show_docs(response: egui::Response, docs: Option<&str>) {
-    if let Some(docs) = docs {
-        response.on_hover_ui(|ui| {
-            egui_utils::easymark(ui, docs);
-        });
-    }
 }
