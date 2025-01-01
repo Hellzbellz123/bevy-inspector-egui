@@ -895,7 +895,7 @@ impl<'a, 'c> InspectorUi<'a, 'c> {
 pub mod short_circuit {
     use std::any::{Any, TypeId};
 
-    use bevy_asset::ReflectAsset;
+    use bevy_asset::{Handle, ReflectAsset};
     use bevy_reflect::PartialReflect;
 
     use crate::reflect_inspector::{Context, InspectorUi, ProjectorReflect};
@@ -915,7 +915,7 @@ pub mod short_circuit {
 
         if let Some(reflect_handle) = env
             .type_registry
-            .get_type_data::<bevy_asset::ReflectHandle>(Any::type_id(value))
+            .get_type_data::<bevy_asset::ReflectHandle>(value.type_id())
         {
             let handle = reflect_handle
                 .downcast_handle_untyped(value.as_any())
@@ -1092,9 +1092,10 @@ pub mod short_circuit {
         let Some(value) = value.try_as_reflect() else {
             return None;
         };
+
         if let Some(reflect_handle) = env
             .type_registry
-            .get_type_data::<bevy_asset::ReflectHandle>(Any::type_id(value))
+            .get_type_data::<bevy_asset::ReflectHandle>(value.type_id())
         {
             let handle = reflect_handle
                 .downcast_handle_untyped(value.as_any())
